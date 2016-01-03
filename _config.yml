@@ -1,1 +1,25 @@
-baseurl: /cheqianxiao.github.io
+
+# Site settings
+title: 车前晓的博客 | Plantain blog
+baseurl: ""# the subpath of your site, e.g. /blog
+#url: "http://yourdomain.com" # the base hostname & protocol for your site
+
+#SNS settings
+github_username: cheqianxiao
+weibo_username: cheqianxiao
+zhihu_username: cheqianxiao
+email: oobakoyo@gmail.com
+
+# Build settings
+markdown: kramdown
+paginate: 5
+# paginate_path: "blog/page:num"
+
+#gems
+gems: [jekyll-paginate]
+
+#google analytics
+google_analytics_id: UA-5531632-1
+
+# Friends
+

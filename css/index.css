@@ -1,0 +1,123 @@
+body { 
+  font-size: 1.6rem;
+  font-family: 'Microsoft Jhenghei', 'Microsoft Yahei'; 
+}
+h1,h2,h3,h4,h5 {
+  font-family: "Hiragino Sans GB", "Avenir Next", Helvetica, Georgia, "Times New Roman", serif;
+}
+p { 
+  line-height: 1.7;
+  font-size: 1.5rem;
+}
+
+
+
+
+.navbar-custom {
+  background-color: transparent;
+  border: none;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.navbar-custom .navbar-brand {  
+  height: 56px;
+  line-height: 25px;
+  font-weight: 800;
+  color: #fff;
+}
+.navbar-custom .navbar-brand:hover, .navbar-custom .nav li a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+.navbar-custom .nav li a {
+  color: #fff;
+  line-height: 20px;
+  font-weight: 800;
+  padding: 20px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+
+
+.intro-header {
+  background: no-repeat center center;
+  background-color: #808080;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  margin-bottom: 20px;
+}
+.intro-header .text-center {
+  padding-top: 200px;
+  padding-bottom: 150px;
+}
+.intro-header h2 {
+  color: #fff;
+}
+
+
+footer {
+  margin: 50px 0;
+}
+
+@media (min-width: 992px) {
+  .posts-container, .sidebar-container { padding-right: 5%; }
+}
+.post p { margin-top: 6px; }
+.post-date {
+  display: inline-block;
+  color: #9a9a9a;  
+}
+.pagination { width: 100%; }
+.pagination a, .pagination span {
+  display: inline-block;
+  border: 1px solid #ccc;
+  width: 20%;
+  padding: 10px;
+  text-align: center;
+}
+.pagination a:hover { background-color: #fafafa; }
+
+
+.tags a { display: inline-block; }
+.roll { 
+  width: 140px; 
+  height: 140px;
+  border-radius: 50%;
+}
+.cd {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-left: 10px;
+}
+
+.fa-play, .fa-pause { 
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  cursor: pointer;
+  color: #fff;
+  margin-top: -8px;
+  margin-left: -8.38px;
+}
+.fa-pause{ display: none; }
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.roll {
+  animation: rotate 60s infinite linear;
+  animation-play-state: paused;
+}
+.post-content {margin-top: 50px; }
+.tag-block { margin-bottom: 16px; }
+.tag-block a { margin-right: .8rem; }
+.tag-post { line-height: 40px; }
+.tag-post a,
+.tag-block a {font-size: 2rem; }
+

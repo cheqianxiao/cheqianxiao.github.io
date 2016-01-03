@@ -1,10 +1,37 @@
 ---
-layout: default
-title: 我的博客
+layout: page
+header-img: home-bg.jpg
+title: 车前晓的博客
 ---
-<h2>{{page.title}}</h2>
-<ul>
-	{% for post in site.posts %}
-	<li>{{ post.date | date_to_string }}<a href="{{ site.baseulr}}{{post.url}}">{{ post.title }}</a></li>
-	{% endfor %}
-</ul>
+<!--标题、日期、摘要  -->
+<div>
+    {% for post in paginator.posts %}
+    <div class="post">
+        <h3><a href="{{ post.url }}"> {{ post.title }}</a></h3>
+        <span class="post-date">{{ post.date | date_to_string }}</span>
+        {{ post.excerpt }}
+    </div>
+    <hr/>
+    {% endfor %}
+</div>
+
+<!-- 分页链接 -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/'}}">Older</a>
+  {% else %}
+    <span>Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    <a class="pull-right" href="{{  paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/'}}">Newer</a>
+  {% else %}
+    <span class="pull-right">Newer</span>
+  {% endif %}   
+</div>
+{% endif %}
+
+
+
+
+ 
