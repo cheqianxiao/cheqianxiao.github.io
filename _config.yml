@@ -22,4 +22,9 @@ gems: [jekyll-paginate]
 google_analytics_id: UA-5531632-1
 
 # Friends
-
+friends: [
+    {
+        title: "高冰",
+        href: "http://momeakl.github.io/"
+    }
+]
