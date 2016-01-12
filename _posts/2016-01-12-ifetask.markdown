@@ -1,0 +1,166 @@
+---
+layout: post
+title: task0002笔记
+header-img: other-bg.jpg
+date:   2016-01-12 09:00:30 +0800
+tags: js 学习笔记 
+---
+
+
+在做百度前端技术学院的task0002，先把前三个的笔记整理一下。
+
+##练习1
+
+###题目：
+
+
+一个多行文本输入框，一个按钮，用户在输入框中输入兴趣爱好，允许用换行、空格（全角/半角）、逗号（全角/半角）、顿号、分号来作为不同爱好的分隔。输入之后点击按钮，每一个爱好输出成为一个checkbox，爱好内容作为checkbox的label。爱好数量大于0小于11，否则给出提示。
+
+
+###思路：
+
+
+
+得到输入，利用`str.split(seperator,limit)`方法将字符串分割为数组，seperator 可以是字符串或正则表达式，limit是返回数组长度的最大值，可以不填。
+举个栗子：
+
+{% highlight javascript %}
+var str="吃饭、睡觉、打豆豆";
+console.log(str.split("、"));
+{% endhighlight %}
+
+  得到:`["吃饭", "睡觉", "打豆豆"]`
+
+
+对数组进行处理。去掉空的和重复的
+
+{% highlight javascript %}
+function unique(array){
+  var newarr = [];
+  for(var i = 0; i < array.length; i++){
+    if(newarr.indexOf(array[i]) == -1 && array[i] != ""){
+    newarr.push(array[i]);
+    }
+  }
+  return newarr;
+}
+{% endhighlight %}
+
+create一个input标签:`var inp=document.createElement("tag");`设定type为checkbox:`inp.type="checkbox";`再create一个文本节点:`var text=document.createTextNode()`,再添加一个换行标签。再把这个三个元素用`appendChild()`方法分别添加到form中。
+
+每次点击按钮时要把上一次的结果删除。先用`hasChildNodes()`方法判断form中是否有子元素。如果有就清空。
+
+{% highlight javascript %}
+if(result.hasChildNodes()){
+  result.innerHTML = "";
+}
+{% endhighlight %}
+
+[demo](http://cheqianxiao.github.io/IFE/task0002/task0002_1.html)   [源码](https://github.com/cheqianxiao/IFE/blob/master/task0002/task0002_1.html)
+
+##练习2
+
+
+
+###题目：
+
+
+一个输入框，一个按钮，用户按照特定的格式YYYY-MM-DD输入年月日，点击按钮后，计算当前距离输入的日期有多少时间差，每秒刷新一次。
+
+###思路：
+
+
+
+之前写过，以为会很简单，结果现在还没完全写好。
+
+
+取得输入的字符串，对字符串进行处理，判断格式是否正确，不正确就告诉用户格式不正确。分离出年月日，据此设置一个目标时间desDate，
+计算和现在的时间curDate的差值。把差值转换成多少天多少小时多少分多少秒，显示到页面上。以上过程写在一个函数中，点击按钮每隔一秒调用这个函数。
+{% highlight javascript %}
+function counter(){  
+  var inp = document.getElementById('inp').value;          
+  var dateArr = inp.split('-');
+  var reg= /\d{4}-\d{2}-\d{2}/;
+  var result = document.getElementById('result');
+  if(!reg.test(inp)){
+    result.innerHTML="(＠_＠)格式没有输入正确呢！";
+    return;
+  }             
+  function format(number){
+    if(number < 10) {
+      number = '0' + number;
+    }
+    return number;
+  }
+  var desDate = new Date(dateArr[0],dateArr[1] - 1,dateArr[2],00,00,00);//输入的时间
+  var curDate = new Date();//起始点
+  var time = (desDate - curDate)/1000;
+  var days = Math.floor(time / (24 * 60 * 60));
+  var hours = Math.floor(time % (24 * 60 * 60) / (60 * 60));
+  hours = format(hours);
+  var minutes = Math.floor(time % (24 * 60 * 60) % (60 * 60)/60);
+  minutes = format(minutes);
+  var seconds = Math.floor(time % (24 * 60 * 60) % (60 * 60) % 60);
+  seconds = format(seconds);
+  var str = '距离' + dateArr[0] + '年' + dateArr[1] + '月' + dateArr[2] + '日还有' + days + '天' +
+            hours + '小时' + minutes + '分' + seconds + '秒';
+  result.innerHTML = str;
+}
+var btn = document.getElementById('btn');
+btn.onclick = function(){ 
+  setInterval('counter()',1000);
+}
+//TODO: 实现每次点击后取一次输入值，每隔一秒计算一次时间，而不是点击后每隔一秒取一次输入值然后计算时间。
+{% endhighlight %}
+需要注意的一点是：月份是从**0**开始算的。
+
+##练习3
+
+###题目：
+
+写一个轮播图，效果就和市面上的轮播图差不多，可以不用写左右箭头。轮播的顺序（正序、逆序）、是否循环、间隔时长可配置。
+
+
+###思路：
+
+
+之前也仔细研究过一次轮播图的原理，轮到自己写，还是写不出来ORZ，然后又去看了一下慕课网上的课程。看完又撸了一遍代码。
+
+学到的一点就是：不需要一下子把所有的逻辑过程都想到，一点点来，想实现什么就先写一个函数。然后不断的增加功能，最后修整一下，该删的删，该加的加，该抽离的抽离。
+
+轮播图的实现原理： 滚动就是图片列表的left值在改变，而无限滚动，就是当滚动到最后一张的时候，用户点击下一张，我们就把第一张给他看，把left值改到第一张的left值就好。这样想，要播几张html里放几张就好。为什么要像下面这样在前后各增加一张呢？
+{% highlight html %}
+<div class="list" id="list" style="left: -600px">
+  <img src="img/5.jpg">//助攻B
+  <img src="img/1.jpg">//A
+  <img src="img/2.jpg">
+  <img src="img/3.jpg">
+  <img src="img/4.jpg">
+  <img src="img/5.jpg">//B
+  <img src="img/1.jpg">//助攻A
+</div>
+{% endhighlight %}
+
+事实是：
+如果你想实现的是瞬间切换，而不是慢慢的从第一张到下一张，以上面为例，就只要写img从1到5，但如果你要的是从一张到另一张有一个平滑过渡，就要增加前后助攻了，最后一个`<img src="img/1.jpg">`，它就是助攻，当图片展示到B的时候，让它和它前面的图片一样，平滑的过渡到下一张，也就是助攻A，然后你看到助攻A上场了，这个时候我就瞬间把镜头切换到A，这个移动你是看不出来的，第一，因为我是瞬间，第二，因为A和和助攻A是长一样的。所以在你看到的是`5=>1=>2`,而实际上呢是`5=>1的助攻=>1=>2`	。
+
+理解了上面的问题之后就可以愉快地搬砖啦：[demo](http://cheqianxiao.github.io/IFE/task0002/task0002_3.html)    [源码](https://github.com/cheqianxiao/IFE/blob/master/task0002/task0002_3.html)
+
+
+
+
+容易忘记的细节问题: 
+
+
+1. 动画执行过程中，要让点击按钮调用动画无效。所以要加一个全局变量，`var switching=false;`然后在动画函数开头将其设为true，动画执行完后设为false。并在点击按钮时判断一下这个变量。
+2. list.style.left得到的是带“px”的字符串，在进行比较前要将其转化为纯number，用`parseInt()`方法。
+3. 元素自带的属性可以通过“.”获取，比如“id”,“class”,“value”等是自带属性，而自定义的属性要通过getAttribute()方法获取。在轮播图中我们为小按钮自定义了index属性，`<span index="2"></span>`得到的属性值是字符“2”，还是要用`parseInt()`将其变为number。
+4.`window.onload()`方法是为了保证在脚本执行前文档已加载完成，当你把脚本放在body底部时，就不要再加`window.onoad()`,如果脚本是放在head中，就要加上。
+
+目前还未实现最后一条可配置的要求，可能要用到函数封装。先暂时放下。
+
+
+
+
+
+
