@@ -71,48 +71,63 @@ if(result.hasChildNodes()){
 
 
 
-之前写过，以为会很简单，结果现在还没完全写好。
 
 
-取得输入的字符串，对字符串进行处理，判断格式是否正确，不正确就告诉用户格式不正确。分离出年月日，据此设置一个目标时间desDate，
-计算和现在的时间curDate的差值。把差值转换成多少天多少小时多少分多少秒，显示到页面上。以上过程写在一个函数中，点击按钮每隔一秒调用这个函数。
+
+点击按钮=>取得输入的字符串=>对字符串进行处理=>判断格式是否正确=>如果错误，给出提示=>如果正确，得到要计算的目标时间desDate,对这个时间进行每隔一秒的倒计时。
 {% highlight javascript %}
-function counter(){  
-  var inp = document.getElementById('inp').value;          
-  var dateArr = inp.split('-');
-  var reg= /\d{4}-\d{2}-\d{2}/;
-  var result = document.getElementById('result');
-  if(!reg.test(inp)){
-    result.innerHTML="(＠_＠)格式没有输入正确呢！";
-    return;
-  }             
-  function format(number){
-    if(number < 10) {
-      number = '0' + number;
-    }
-    return number;
+var btn = document.getElementById('btn');
+var inp;
+var dateArr;
+var timer; 
+
+btn.onclick = function(){ 
+  if(timer){
+    clearInterval(timer);
   }
+  inp = document.getElementById('inp').value;            
+  dateArr = inp.split('-');
+  var reg = /\d{4}-\d{2}-\d{2}/;
+  var result = document.getElementById('result');
+  if(reg.test(inp)){
+    timer = setInterval('counter()',1000);
+  } 
+  else{           
+    result.innerHTML = "(＠_＠)格式没有输入正确呢！";           
+  }
+}
+
+function counter(){            
   var desDate = new Date(dateArr[0],dateArr[1] - 1,dateArr[2],00,00,00);//输入的时间
   var curDate = new Date();//起始点
-  var time = (desDate - curDate)/1000;
-  var days = Math.floor(time / (24 * 60 * 60));
-  var hours = Math.floor(time % (24 * 60 * 60) / (60 * 60));
-  hours = format(hours);
-  var minutes = Math.floor(time % (24 * 60 * 60) % (60 * 60)/60);
-  minutes = format(minutes);
-  var seconds = Math.floor(time % (24 * 60 * 60) % (60 * 60) % 60);
+  var time = Math.round((desDate - curDate)/1000);
+  var days= Math.floor(time/(24*3600));
+  var hours = Math.floor(time%(24*3600)/3600);
+  var minutes = Math.floor(time%(24*3600)%3600/60)
+  var seconds = time%60;
+  hours = format(hours);        
+  minutes = format(minutes);  
   seconds = format(seconds);
   var str = '距离' + dateArr[0] + '年' + dateArr[1] + '月' + dateArr[2] + '日还有' + days + '天' +
-            hours + '小时' + minutes + '分' + seconds + '秒';
+             hours + '小时' + minutes + '分' + seconds + '秒';          
   result.innerHTML = str;
 }
-var btn = document.getElementById('btn');
-btn.onclick = function(){ 
-  setInterval('counter()',1000);
-}
-//TODO: 实现每次点击后取一次输入值，每隔一秒计算一次时间，而不是点击后每隔一秒取一次输入值然后计算时间。
+function format(number){
+  if(number < 10) {
+    number = '0' + number;
+  }
+  return number;
+}        
 {% endhighlight %}
-需要注意的一点是：月份是从**0**开始算的。
+需要注意的点：
+
+1. 月份是从**0**开始算的。
+2. 每次点击时要把上一次的计时清除，要不然会出现: 用户输入一个格式正确的值=>程序判断出格式正确=>计时=>用户再输入一个格式错误的值=>程序判断出格式错误=>显示提示信息=>继续对一个格式错误的值进行计时(因为上一次的setInteval('counter()',1000) set之后并没有clear)
+
+
+
+2016.01.16更新：改掉了每隔一秒都获取输入值的bug，之前无法解决bug的原因是:误以为函数A调用函数B则函数B可以直接使用函数A中定义的变量。
+事实是如果B要使用A中的变量，可以让A以参数的形式把变量传给B，或者把这个变量定义为全局变量。
 
 ##练习3
 
@@ -155,9 +170,12 @@ btn.onclick = function(){
 1. 动画执行过程中，要让点击按钮调用动画无效。所以要加一个全局变量，`var switching=false;`然后在动画函数开头将其设为true，动画执行完后设为false。并在点击按钮时判断一下这个变量。
 2. list.style.left得到的是带“px”的字符串，在进行比较前要将其转化为纯number，用`parseInt()`方法。
 3. 元素自带的属性可以通过“.”获取，比如“id”,“class”,“value”等是自带属性，而自定义的属性要通过getAttribute()方法获取。在轮播图中我们为小按钮自定义了index属性，`<span index="2"></span>`得到的属性值是字符“2”，还是要用`parseInt()`将其变为number。
-4.`window.onload()`方法是为了保证在脚本执行前文档已加载完成，当你把脚本放在body底部时，就不要再加`window.onoad()`,如果脚本是放在head中，就要加上。
+
 
 目前还未实现最后一条可配置的要求，可能要用到函数封装。先暂时放下。
+
+
+2016.01.15更新：完成最后一条可配置的要求。（这两天看了慕课网上@liuyubobobo老师讲的canvas绘图。顺带学到了关于函数复用的知识。就回来把这个坑填了。PS：老师讲的canvas真是超赞，思路清晰，毫不拖沓，墙裂推荐给有需要的同学！）
 
 
 
