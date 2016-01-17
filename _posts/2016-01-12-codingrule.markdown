@@ -5,7 +5,7 @@ header-img: other-bg.jpg
 date:   2016-01-12 10:00:30 +0800
 ---
 
-在网上查找到的关于javascript,html,css的编码规范，备忘。
+关于javascript,html,css的编码规范，备忘。
 
 ###黄金定律：永远遵循同一套编码规范
 

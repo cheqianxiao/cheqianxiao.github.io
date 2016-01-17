@@ -1,0 +1,205 @@
+---
+layout: post
+title: task0001笔记
+header-img: other-bg.jpg
+date:   2016-01-17 09:00:30 +0800
+tags: css 学习笔记 
+---
+
+
+百度前端技术学院task0001的笔记。
+
+****
+
+###Q：背景图片 or img标签 ？
+
+
+ * 考虑语义性原则，如果是图片是网页内容的一部分，则使用img标签，如果不是，就使用CSS的background-image。
+
+ * 考虑SEO，用a标签+CSS的background-image，因为搜索引擎对文本信息的识别比alt中的文字友好。
+
+ * 如果想让用户打印页面的时候默认打印图片，就用img标签。
+
+ * 如果要实现背景图片的transition或animation，用background-image。如果用img标签，要实现动画就要用js或jQuery去改变img的src属性。
+
+参考[SO上的讨论](http://stackoverflow.com/questions/492809/when-to-use-img-vs-css-background-image)
+
+****
+
+###Q：img元素底部为何会有空白，如何去除?
+
+
+   会有空隙是因为图片的属性`vertical-align`默认值为`baseline`，和基线对齐。
+
+   ![](http://imglf0.nosdn.127.net/img/ZVQ2RFY1U0phUGFZUmpZNjNOTi9vV3VBczN3S2tDakpyS3RpYTdOcGdQZFI2cVJDZFJYYWRnPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg)
+
+   解决办法：
+
+ * 让vertical-align失效：img { display: block;},在布局允许的情况下也可以采用浮动或绝对定位。
+
+ * 将vertical-align的属性值改成别的值：在考虑图文混排的情况下一般改成bottom或middle.
+
+ * 将font-size或line-height设为0。
+
+参考[What is vertical-align?](https://css-tricks.com/what-is-vertical-align/) 和[img元素底部为何有空白？](https://www.zhihu.com/question/21558138)
+
+****
+
+###Q：如何实现父元素透明子元素不透明？
+
+如果给父元素设置
+{% highlight css %}
+div {
+  background-color: #000;
+  opacity: 0.5;
+  filter: alpha(50); //IE5~7
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; IE8
+}
+{% endhighlight %}
+ 则子元素也会跟着透明，即使给子元素重新设置透明度也无用。解决办法: 
+{% highlight css %}
+div {
+  background-color: rgb(0,0,0); //fallback color for IE
+  background-color: rgba(0,0,0,.5);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=#80000000,endC
+               olorstr=#80000000)";  //filter for IE8
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=#80000000, endColors
+          tr=#80000000);  //filter for IE5~7
+}
+{% endhighlight %}
+
+ ****
+
+###Q：`display: none;`和`visibility: hidden;`实现隐藏元素的区别？
+
+`display: none;`常被js用来在不删除元素的情况下显示或隐藏元素。<br>
+ `visibility: hidden;`会保留元素本该显示的空间，而`display: none;`则不会。<br>
+
+*****
+
+###Q：js文件放在是放在<head></head>中还是放在页面底部？
+
+
+以下摘自[浏览器的JavaScript引擎](http://javascript.ruanyifeng.com/bom/engine.html#toc5)
+
+浏览器的核心是两部分： **渲染引擎** 和 **JS引擎**，渲染引擎就是常说的浏览器内核。
+
+渲染网页的四个阶段：
+
+1. 解析HTML为DOM，解析CSS为CSSOM（CSS Object Model)
+
+2. 将DOM和CSSOM合成一棵渲染树。
+
+3. 完成渲染树的布局。
+
+4. 将渲染树绘制到屏幕。
+
+（以上过程并非严格按顺序执行）
+
+正常的网页加载流程：
+
+1. 浏览器一边下载HTML网页，一边开始解析。
+
+2. 解析过程中发现script标签。
+
+3. 暂停解析，网页渲染的控制权交给JS引擎。
+
+4. 如果script标签引用了外部脚本，就下载该脚本，否则直接执行。
+
+5. 执行完毕，控制权交还给渲染引擎，恢复往下解析HTML网页。
+
+以上过程中如果外部脚本长时间无法完成加载，会导致页面长时间失去响应，呈现“假死”状态，也被称为“阻塞效应”。
+
+避免“阻塞效应”的方法：
+
+方法1. 将script标签放在网页底部，而不是头部，这样即使遇到脚本加载失去响应，网页主体的渲染也已经完成。用户至少可以看到内容，而不是面对一个空白的页面。
+同时也可以保证在DOM结构生成之后再调用DOM。
+
+方法2. 给script标签加上`defer`属性。
+
+defer属性告诉浏览器，等到DOM加载完成后再执行指定脚本。
+{% highlight javascript %}
+<script src="1.js" defer></script>
+<script src="2.js" defer></script>
+{% endhighlight %}
+加载流程：
+
+1. 浏览器开始解析HTML网页。
+
+2. 解析过程中遇到带有defer属性的script标签。
+
+3. 浏览器继续往下解析HTML网页 ，同时并行下载script标签中的外部脚本。
+
+4. 浏览器完成解析HTML网页，此时再执行下载的脚本。（脚本的执行顺序就是他们在页面上出现的顺序）
+
+注： 对于内置而不是链接外部脚本文件的script标签，defer属性不起作用。
+
+方法3. 给script标签加上`async`属性。
+
+{% highlight javascript %}
+<script src="1.js" async></script>
+<script src="2.js" async></script>
+{% endhighlight %}
+
+加载流程：
+
+1. 浏览器开始解析HTML网页。
+
+2. 解析过程中遇到带有async属性的script标签。
+
+3. 浏览器继续往下解析HTML网页 ，同时并行下载script标签中的外部脚本。
+
+4. 脚本加载完毕，浏览器暂停解析HTML网页，开始执行下载的脚本。（哪个先下载完就先执行哪个）
+
+5. 脚本执行完毕，浏览器恢复解析HTML网页。
+
+使用`defer`属性还是`async`属性？
+
+如果脚本之间没有依赖关系就用`async`属性,如果有，就用`defer`属性。同时使用两者，`defer`属性将不起作用，浏览器行为由`async`属性决定。
+
+****
+
+###Q：如何实现多栏高度自适应？
+
+
+子元素`margin: -9999px; padding: 9999px;`父元素`overflow: hidden;`。
+![](http://7xq6lv.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160116183832.png)
+
+
+****
+
+###Q：如何实现列表元素两端自动对齐？
+
+
+子元素 `display: inline-block;`父元素`text-align: justify;`
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document1.png)
+
+如果想让最后一行也两端对齐。在子元素的后面添加一个高度为0宽度为100%的inline-block元素作为占位元素。
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document2.png)
+
+如果想让最后一行居左对齐，在子元素的后面再添加几个高度为0宽度为子元素宽度的inline-block元素作为占位元素（个数为一行的个数足矣）。
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document3.png)
+
+如果列表元素只有一行，要两端对齐，方法和让多行中最后一行两端对齐的方法一样。
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document4.png)
+
+去除列表元素上下间距的方法：父元素`line-height: 0;`或子元素`vertical-align: top;`
+
+去除占位元素带来的空白高度的方法：父元素`line-height: 0;`且占位元素`vertical-align: top;`
+
+所以同时去除列表元素上下间隙和占位元素带来的空白高度的方法：父元素`line-height: 0;`且占位元素`vertical-align: top;`
+
+
+
+
+
+
+
+
+
+
+
