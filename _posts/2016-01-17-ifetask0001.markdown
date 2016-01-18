@@ -159,11 +159,43 @@ defer属性告诉浏览器，等到DOM加载完成后再执行指定脚本。
 
 ****
 
-###Q：如何实现多栏高度自适应？
+###Q：如何实现多栏自适应等高？
 
 
 子元素`margin: -9999px; padding: 9999px;`父元素`overflow: hidden;`。
+ 
+ html 
+
+{% highlight html %}
+<div class="container">
+  <div class="a">早上好啊，今天天气真是好啊，这么好的天气不如出去走走吧</div>
+  <div class="b">中午好</div>
+  <div class="c">晚上好啊，天上的星星可真多啊！</div>
+</div>
+{% endhighlight %}
+
+css
+
+{% highlight css %}
+.container {
+  overflow: hidden;
+}
+.a, .b, .c {
+  width: 200px;
+  float: left;
+  padding-bottom: 9999px;
+  margin-bottom: -9999px;
+}
+.a { background-color: lightpink; }
+.b { background-color: lightgreen; }
+.c { background-color: lightblue; }
+{% endhighlight %}
+
 ![](http://7xq6lv.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160116183832.png)
+
+如果要给每一栏加底边框，可在每一列中再加一个子div来模拟边框，让这个子div相对外层父容器container绝对定位。
+
+参考[八种创建等高列布局](http://www.w3cplus.com/css/creaet-equal-height-columns)
 
 
 ****
@@ -193,8 +225,64 @@ defer属性告诉浏览器，等到DOM加载完成后再执行指定脚本。
 
 所以同时去除列表元素上下间隙和占位元素带来的空白高度的方法：父元素`line-height: 0;`且占位元素`vertical-align: top;`
 
+****
+
+###Q：如何实现一栏固定一栏自适应的布局？
+
+方法一：利用margin负值和浮动
+
+main和side都浮动于容器container中。由于一行放不下，side浮动到了下一行。
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document5.png)
+
+如果将side的margin-left设为负的200px，即它自身宽度，它就刚好跑到上一行的尾部，覆盖在main上面。
 
 
+
+将side的margin-left继续减小，减小到负的600px,即父容器宽度，它就跑到了上一行的头部，
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document7.png)
+
+我们可以在main里再放一个子元素来装真正的主体内容，再给这个子元素设置相应的margin或padding来留出侧栏的位置。就可以实现侧栏固定，主体自适应的布局。
+
+方法二： 一栏浮动，一栏不浮动
+
+浮动的元素要写在前面，不浮动的元素写在后面。
+
+html
+
+{% highlight html %}
+<div class="container">
+  <div class="side"></div>
+  <div class="main"></div>
+</div>
+{% endhighlight %}
+
+css
+
+{% highlight css %}
+.container {
+  width: 600px;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #fafafa;
+}
+.side {
+  float: left;
+  width: 200px;
+  height: 100px
+  background-color: lightblue;
+}
+.main {
+  margin-left: 200px;
+  height: 100px'
+  background-color: lightpink;
+}
+{% endhighlight %}
+
+![](http://7xq6lv.com1.z0.glb.clouddn.com/Document8.png)
+
+这种方法不利于SEO，因为主要的内容main放在了后面，html的解析是从上到下的，用户先看到的是side，然后才是main。
 
 
 
