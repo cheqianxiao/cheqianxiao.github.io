@@ -31,7 +31,7 @@ tags: css 学习笔记
 
    会有空隙是因为图片的属性`vertical-align`默认值为`baseline`，和基线对齐。
 
-   ![](http://7xq6lv.com1.z0.glb.clouddn.com/Document.png)
+   ![](http://imglf0.nosdn.127.net/img/ZVQ2RFY1U0phUGFZUmpZNjNOTi9vV3VBczN3S2tDakpyS3RpYTdOcGdQZFI2cVJDZFJYYWRnPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg)
 
    解决办法：
 
