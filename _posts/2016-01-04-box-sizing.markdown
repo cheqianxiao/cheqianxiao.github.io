@@ -56,7 +56,7 @@ border和padding都移到盒子里面
 这是你或许会问自己：可能古来的IE做了一件对的事？[(很多人这么认为)](http://www.jefftk.com/p/the-revenge-of-the-ie-box-model)
 
 
-###box-sizing 重置方法
+### box-sizing 重置方法
 
 **旧的box-sizing重置方法**
 
@@ -94,7 +94,7 @@ html {
 
 这种方法给你更大的灵活性，你可以在需要的地方使用`padding-box`或`content-box`,不用担心通用选择器覆盖你的css。(在["Inheriting box-sizing Probably Slightly Better Best Practice"](https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/)中我们对这个问题进行了深入研究。)存在的一个问题是:`box-sizing`不被正常继承，so it's specialized behavior，(这里不会翻orz）和你设置的不完全一致。
 
-###浏览器前缀
+### 浏览器前缀
 每个现代浏览器都支持`box-sizing: border-box;`,不带前缀的，所以不需要加上浏览器前缀，但如果你想支持那些老版本Safari (< 5.1), Chrome (< 10), and Firefox (< 29),你就得加上前缀`-webkit`和`-moz`，像这样：
 {% highlight css %}
 html {
@@ -112,7 +112,7 @@ html {
 
 
 
-###Known Issues
+### Known Issues
  `box-sizing: border-box;`被所有浏览器的当前版本支持，但`padding-box`目前只被Firefox支持，更多的有关浏览器支持的信息在我们的[box-sizing](https://css-tricks.com/almanac/properties/b/box-sizing/)条目中。
 
  在IE的更早版本中（IE<=8）还存在一些问题:

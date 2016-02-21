@@ -11,7 +11,7 @@ tags: css 学习笔记
 
 ****
 
-###Q：背景图片 or img标签 ？
+### Q：背景图片 or img标签 ？
 
 
  * 考虑语义性原则，如果是图片是网页内容的一部分，则使用img标签，如果不是，就使用CSS的background-image。
@@ -26,7 +26,7 @@ tags: css 学习笔记
 
 ****
 
-###Q：img元素底部为何会有空白，如何去除?
+### Q：img元素底部为何会有空白，如何去除?
 
 
    会有空隙是因为图片的属性`vertical-align`默认值为`baseline`，和基线对齐。
@@ -45,7 +45,7 @@ tags: css 学习笔记
 
 ****
 
-###Q：如何实现父元素透明子元素不透明？
+### Q：如何实现父元素透明子元素不透明？
 
 如果给父元素设置
 {% highlight css %}
@@ -70,14 +70,14 @@ div {
 
  ****
 
-###Q：`display: none;`和`visibility: hidden;`实现隐藏元素的区别？
+### Q：`display: none;`和`visibility: hidden;`实现隐藏元素的区别？
 
 `display: none;`常被js用来在不删除元素的情况下显示或隐藏元素。<br>
  `visibility: hidden;`会保留元素本该显示的空间，而`display: none;`则不会。<br>
 
 *****
 
-###Q：js文件放在是放在<head></head>中还是放在页面底部？
+### Q：js文件放在是放在<head></head>中还是放在页面底部？
 
 
 以下摘自[浏览器的JavaScript引擎](http://javascript.ruanyifeng.com/bom/engine.html#toc5)
@@ -159,7 +159,7 @@ defer属性告诉浏览器，等到DOM加载完成后再执行指定脚本。
 
 ****
 
-###Q：如何实现多栏自适应等高？
+### Q：如何实现多栏自适应等高？
 
 
 子元素`margin: -9999px; padding: 9999px;`父元素`overflow: hidden;`。
@@ -200,7 +200,7 @@ css
 
 ****
 
-###Q：如何实现列表元素两端自动对齐？
+### Q：如何实现列表元素两端自动对齐？
 
 
 子元素 `display: inline-block;`父元素`text-align: justify;`
@@ -227,7 +227,7 @@ css
 
 ****
 
-###Q：如何实现一栏固定一栏自适应的布局？
+### Q：如何实现一栏固定一栏自适应的布局？
 
 方法一：利用margin负值和浮动
 
