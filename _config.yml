@@ -16,7 +16,7 @@ paginate: 5
 # paginate_path: "blog/page:num"
 
 #gems
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]
 
 #google analytics
 google_analytics_id: UA-5531632-1
