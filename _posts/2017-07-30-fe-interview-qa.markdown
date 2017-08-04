@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 前端面试题整理
+title: 前端面试题——JavaScript
 header-img: other-bg.jpg
 date:   2017-07-30 08:00:30 +0800
 tags:  前端面试 
@@ -10,8 +10,6 @@ tags:  前端面试
 
 
 * * *
-## JavaScript
-***
 ### **js数据类型**
 
 加上es6的Symbol类型共**7**种数据类型
@@ -166,7 +164,7 @@ undefined 表示未定义
 	var me = new Coder()
 
 这样就实现了构造函数和原型的方式模拟出一个Person类，并让Coder类继承了Person类，实现了类的继承，完成了oop中的“封装”、“继承”
-
+![原型链示意图](http://7xq6lv.com1.z0.glb.clouddn.com/prototype-chain.png)  
 新创建的实例foo的原型会指向Foo.prototype
 
 ***
