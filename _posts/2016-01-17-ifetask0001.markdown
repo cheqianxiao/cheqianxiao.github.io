@@ -72,8 +72,9 @@ div {
 
 ### Q：`display: none;`和`visibility: hidden;`实现隐藏元素的区别？
 
-`display: none;`常被js用来在不删除元素的情况下显示或隐藏元素。<br>
- `visibility: hidden;`会保留元素本该显示的空间，而`display: none;`则不会。<br>
+* 渲染时，`display: none;`的元素不占据空间； `visibility: hidden;`会保留元素本该显示的空间。  
+* `visibility`是继承属性，`display`是非继承属性。
+*  修改常规文档流中元素的`display`属性会导致重排，而修改`visibility`属性会导致重绘
 
 *****
 

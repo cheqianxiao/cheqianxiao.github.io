@@ -1,5 +1,6 @@
 body { 
   font-size: 1.6rem;
+  line-height: 2.0;
   font-family: 'Microsoft Jhenghei', 'Microsoft Yahei'; 
   /*font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Lantinghei SC', 'Open Sans', 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;*/
 }
@@ -7,7 +8,6 @@ h1,h2,h3,h4,h5 {
   font-family: "Hiragino Sans GB", "Avenir Next", Helvetica, Georgia, "Times New Roman", serif;
 }
 p { 
-  line-height: 1.7;
   font-size: 1.5rem;
 }
 
