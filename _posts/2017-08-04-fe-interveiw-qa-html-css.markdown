@@ -10,16 +10,14 @@ tags:  前端面试
 
 
 * * *
-#### **img的title和alt的区别**  
+### **img的title和alt的区别**  
 
 ***
 
 1. tilte属于通用属性，为元素提供附加提示信息，鼠标滑过元素时显示。  
 2. alt是`<img>`特有属性，用来描述图片内容，图片无法加载时显示，读屏器会读取它的值。若图片纯粹出于设计目的，应将它放到css中，而非html中。若必须放在html中，alt属性应设置为空。除此之外的图片，都应设置alt属性。不仅是为了SEO，也是为了对视觉障碍者友好。   
 
-<br/>
-
-#### **HTML全局属性有哪些？**  
+### **HTML全局属性有哪些？**  
 
 ***  
 全局属性是指可以用在任何html元素的属性。  
@@ -44,9 +42,7 @@ tags:  前端面试
 * translate 是否需要翻译  
 * tabindex   
 
-<br/>
-
-#### **web语义化**  
+### **web语义化**  
 
 ***  
 html语义化： 用标签来标记内容，如h1 - h6表示标题。  
@@ -57,10 +53,7 @@ css语义化： class和id命名都要有意义
 3. 读屏器友好
 4. 利于代码维护   
 
-
-<br/>  
-
-#### **在浏览器地址栏输入一个网址后...** 
+### **在浏览器地址栏输入一个网址后...** 
 
 ***  
 简洁版： 
@@ -103,9 +96,8 @@ http状态码：
 
 参考[浏览器的JavaScript渲染引擎](http://javascript.ruanyifeng.com/bom/engine.html#toc5)  
 
-<br/>
 
-#### **CSS选择器有哪些？** 
+### **CSS选择器有哪些？** 
 
 ***  
 * id   
@@ -147,7 +139,30 @@ http状态码：
 
 * `:checked`  
 
-<br/>  
+### **css属性优先级算法**  
+
+***  
+权重从高到低  
+* !important  
+* 内联 
+* id  
+* class  
+* 标签  
+* 伪类  
+
+先比较权重，权重越大优先级越高，权重相同比较定义的位置，后面比前面的高。  
+
+
+### **position**属性  
+
+***  
+`position` 和 `float` 属性决定了使用哪种算法来对一个盒子进行定位。  
+`position`属性有5个取值： 
+* `static`： 盒子在常规文档流中，`left`、`right`、`top`、`bottom`属性对其无效。  
+* `relative`： 盒子在常规文档流中，`left`、`right`、`top`、`bottom`属性相对其在正常文档流中的位置进行定位。  
+* `absolute`： 盒子脱离常规文档流， `left`、`right`、`top`、`bottom`属性相对其containing block进行定位。  
+* `fixed`： 盒子脱离常规文档流，`left`、`right`、`top`、`bottom`属性相对viewport进行定位，且页面滚动时位置不变。  
+
 
 ### **清除浮动**  
 
@@ -160,5 +175,73 @@ http状态码：
 
 清除浮动的方法：  
 1. 让父元素也浮动  
-2. 使用`clear: both`
-3. 父元素使用`overflow: auto`
+2. 使用`clear: both`   
+
+		.clearfix {
+			*zoom: 1; 
+		}
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+			height: 0;
+			visibility: hidden;
+		}
+3. 父元素使用`overflow: auto`或`overflow: hidden`   
+
+		.clearfix {
+			overflow: auto;
+			*zoom: 1;
+		}
+4. 使用`display: table`   
+
+		.clearfix:before, .clearfix:after {
+			content: '';
+			display: table;
+	    }
+
+
+### **外边距折叠**   
+
+***  
+
+外边距折叠是指垂直外边距，水平外边距不会发生折叠。  
+同时满足下面这些情况才会发生折叠的情况：  
+1. 在常规正常流中的块级元素，且在同一BFC中。  
+2. 没有行盒、clearance、border、padding将它们分隔，即margin相邻。  
+3. 两个外边距垂直相邻，可以是以下情况之一：  
+   * 父元素的margin-top和第一个常规文档流中的子元素的margin-top  
+   * 元素的margin-bottom与其下一个常规文档流中的兄弟元素的margin-top  
+   * 元素的高度为'auto'，它的margin-bottom和其最后一个常规文档流中的子元素的margin-bottom  
+   * 高度为0或'auto'且最小高度为0，不包含常规文档流中的子元素，并自身没有建立新的BFC，它的margin-top和margin-bottom发生折叠。    
+
+
+### **块级格式上下文（BFC,block formatting context）**  
+
+***  
+
+引用W3C:  
+>Boxes in the normal flow belong to a formatting context, which may be block or inline, but not both simultaneously. Block-level boxes participate in a block formatting context. Inline-level boxes participate in an inline formatting context.  
+
+>Floats, absolutely positioned elements, block containers (such as inline-blocks, table-cells, and table-captions) that are not block boxes, and block boxes with 'overflow' other than 'visible' (except when that value has been propagated to the viewport) establish new block formatting contexts for their contents.
+
+>In a block formatting context, boxes are laid out one after the other, vertically, beginning at the top of a containing block. The vertical distance between two sibling boxes is determined by the 'margin' properties. Vertical margins between adjacent block-level boxes in a block formatting context collapse.
+
+>In a block formatting context, each box's left outer edge touches the left edge of the containing block (for right-to-left formatting, right edges touch). This is true even in the presence of floats (although a box's line boxes may shrink due to the floats), unless the box establishes a new block formatting context (in which case the box itself may become narrower due to the floats).
+
+强行翻译：    
+>在常规文档流中的盒子是属于某个格式上下文中的，这个格式上下文可能是块级的也可能是行内的。块级元素参与形成块级格式上下文，行内元素参与形成行内格式上下文。
+
+>浮动或绝对定位的元素、非块级元素的块容器（比如inline-blocks，table-cells，table-captions）和overflow属性为非visible的元素，这些元素为他们的内容创造了块级格式上下文。   
+
+>在BFC中，盒子从顶部开始依次垂直排列，相邻盒子的垂直距离由他们的外边距决定，相邻的块级盒子之间的**垂直**外边距会进行折叠。 每个盒子的左外边缘触碰到触碰到容器的左边缘。  
+
+BFC是一个隔离出来的布局环境，BFC里面的元素和外面的元素互不影响。  
+
+**清除浮动**： 不让BFC内浮动的元素对BFC外面的元素产生影响，将其高度计算在内。  
+
+**避免margin折叠**： 同一个BFC中的相邻块级元素垂直外边距发生折叠，为其中一个建立新的BFC即可避免margin折叠。不同BFC互不影响。  
+
+<br/>  
+
+
