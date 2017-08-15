@@ -41,7 +41,8 @@ Link是从`react-router`引入，而不是`react-router-dom`。
 
     感谢作者：[https://github.com/lmk123/blog/issues/28](https://github.com/lmk123/blog/issues/28)
  
-
+4.报错“Super expression must either be null or a function, not undefined”  
+React.Component 写成了React.component
 
 
 
