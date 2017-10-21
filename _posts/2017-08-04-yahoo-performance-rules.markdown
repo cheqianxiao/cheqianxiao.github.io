@@ -40,7 +40,9 @@ tags:  前端面试
 	- [将样式文件放在最上面](#将样式文件放在最上面)  
 	- [避免使用css表达式](#避免使用css表达式)  
 	- [使用`<link>`而不是`@import`](#使用`<link>`而不是`@import`)  
-6. img
+6. img  
+	- [使favicon.ico尽可能小并可缓存](#使favicon.ico尽可能小并可缓存)
+	- [不要在html中缩放图片](#不要在html中缩放图片)
 7. mobile  
 
 <br/>
@@ -361,6 +363,32 @@ IE默认将DNS缓存30分钟，在`DnsCacheTimeout`注册项中指定，火狐�
 更多相关信息可以查看 Julien Lecomte的["High Performance Ajax Applications"](http://yuiblog.com/blog/2007/12/20/video-lecomte/)
 
 <br/>  
+
+#### **不要在html中缩放图片**   
+
+*** 
+
+不要因为可以在html中设置图片宽高就使用比所需图片尺寸大的图片，如果你需要  
+
+	<img width="100" height="100" src="mycat.jpg" alt="My Cat" />   
+
+你就应该使用100px*100px的图片，而不是缩小了的500px*500px的图片。  
+
+<br/>  
+
+#### **使favicon.ico尽可能小并可缓存**   
+
+***  
+
+favicon.ico是存在服务器根路径下的一张图片，令人讨厌的是即使你不在意它，浏览器还是去请求这个图片，所以最好不要响应`404 NOT FOUND`。并且由于是在同一个服务器上，每次请求它时都会携带cookie。并且这个图片也会干扰资源下载顺序，比如在IE中，在onload事件中加载额外的资源，favicon.ico会在这些资源加载之前被加载。  
+
+为了消除favico.ico带来的不好影响：   
+
+
+* favico尽可能小，1k以下。  
+* 设置一个你觉得合适的Expires header（因为当你想修改这个文件的时候你没法重命名），或许可以安全地将其设为几个月，可以通过查看当前favico.ico上次修改日期来决定将Expires header设置多久。  
+
+<br/>
 
 **相关阅读**：
 

@@ -17,7 +17,6 @@ A: 为了代码复用。
 Q：为什么要有模块化规范？  
 A: 为了约束大家统一模块的写法。
 
-CommonJS、AMD、CMD    
 
 **CommonJS**  
 Node.js采用的便是CommonJS规范   
@@ -64,5 +63,25 @@ AMD推崇**依赖前置**
     })
 
 ***  
+
+**ES6 module**  
+
+基本用法：  
+	
+	//moudleA.js
+	export function a(){
+		doSomething()
+	}  
+	//main.js
+	import {a} from './moudleA' 
+	a()
+
+	//moudleA.js  
+	export default function a(){
+		doSomething()
+	}
+	//main.js  
+	import whatever from './moudleA'  
+	whatever()
 
 感谢阅读，如有错误，欢迎指出。  

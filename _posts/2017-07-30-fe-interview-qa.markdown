@@ -12,13 +12,24 @@ tags:  前端面试
 * * *
 ### **js数据类型**
 
-加上es6的Symbol类型共**7**种数据类型
 
 原始类型： number string boolean null undefined symbol
 
 引用类型： object
 
-本质上，js中所有的数据都属于对象（广义）
+本质上，js中所有的数据都属于对象（广义）  
+
+**symbol**   
+ES6为防止属性名冲突引入的第七种数据类型，一种类似字符串的数据类型。
+	
+	var s = Symbol()
+	typeof s //symbol  
+
+每一个symbol值都是不相同的，即使传入参数相同   
+
+	var s1 = Symbol('s')
+	var s2 = Symbol('s')  
+	s1 === s2 //false  
 
 ***
 
@@ -244,9 +255,33 @@ document对象是指文档对象 window对象的一个属性
 去重
 
 	var arr = [1,2,1]
-	var uniqueArr = [...new Set(arr)]
+	var uniqueArr = [...new Set(arr)]  
 
-***
+Set是ES6提供的一种新的数据结构，类似于数组。Set本身是个构造函数，用来生成Set数据结构。
+
+	var s = new Set()
+	//添加成员的方法
+	s.add(3)  
+
+Set函数接受一个数组（或其他具有iterable接口的其他数据结构）作为参数  
+	
+	var set = new Set([1,2,2])
+	set.size //2  
+
+Set实例的属性： `size` 返回成员的数量   
+Set实例的方法： 
+`add(value)` 添加成员  
+`delete(value)` 删除成员，返回一个布尔值表示是否删除成功  
+`has(value)` 是否有该成员，返回一个布尔值  
+`clear()` 清除所有成员，无返回值  
+
+Array.from()可以将Set数据结构转为数组 
+	
+	var set = new Set([1,2,2])
+	Array.from(set) // [1,2]  
+
+
+***  
 
 ### **变量声明提前**
 
